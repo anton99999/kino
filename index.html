@@ -1,0 +1,143 @@
+<html> <!-- !DOCTYPE  -->
+<html lang="ua">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КІНЦО</title>
+    <style>
+        *{margin: 0;padding: 0;}
+        ::-webkit-scrollbar{
+            width: 0px;
+        }
+        body{
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            user-zoom: none;
+        }
+        header{
+            padding: 0px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #7A1616;
+            height: 60px;
+
+        }
+        header div{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            
+        }
+        header div p{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 24px;
+            line-height: 28px;
+            color: white;
+        }
+        main{
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            background: #000;
+            overflow-y: scroll;
+            padding: 20px;
+            
+        }
+        main p{
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 300;
+            font-size: 16px;
+            line-height: 200%;
+            color: white;
+            margin-bottom: 50px;
+        }
+        footer{
+            display: flex;
+            flex-direction: column;
+        }
+        .shadow{
+            height: 100px;
+            width: 100%;
+            top: calc(100vh - 215px);
+            position: fixed;
+            background: linear-gradient(0deg, #000 0%,rgba(0, 0, 0, 0) 100%);
+        }
+        .inputs{
+            background: #7A1616;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .inputs input{
+            height: 30px;
+            width: 100%;
+            border-radius: 50px;
+            border: none;
+            margin-right: 10px;
+
+        }
+        .menu{
+            border-top: 1px white solid;
+            background: #7A1616;
+
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <p>КІНЦО</p>
+            <img src="img/copy-all.svg">
+        </div>
+    </header>
+    <main>
+        <p>
+            🎬 Людина із сталі, 2013 <br>
+            🎬 Листопадові злочинці, 2017 <br>
+            🎬 Світ забуття, 2013 <br>
+            🎬 Аліта, 2019  <br>
+            🎬 Хмарочос, 2018 <br>
+            🎬 Круелла, 2021  <br>
+            🎬 Назад у майбутнє, 1985  <br>
+            🎬 Конг: Острів черепа, 2017 <br>
+            🎬 Бладшот, 2020 <br>
+            🎬 Шалений патруль 2, 2016 <br>
+            🎬 Автомонстри, 2016  <br>
+            🎬 День, коли земля зупинилась, 2008 <br>
+            🎬 Шпигунка, 2015 <br>
+            🎬 Реальна сталь, 2015  <br>
+            🎬 Притримай темряву, 2018 <br>
+            🎬 Страшилки, 2015  <br>
+            🎬 Людина павук: Дшн, 2021  <br>
+            🎬 Мисливці на привидів, 2021  <br>
+            🎬 Джокер, 2019  <br>
+            🎬 Дюна, 2021  <br>
+        </p>
+        <div class="shadow"></div>
+    </main>
+    <footer>
+        
+        <div class="inputs">
+            <input type="text">
+            <img src="img/send.svg">
+        </div>
+        <div class="menu">
+            <img src="img/all.svg">
+            <img src="img/want.svg">
+            <img src="img/view.svg">
+        </div>
+
+    </footer>
+</body>
+</html>
