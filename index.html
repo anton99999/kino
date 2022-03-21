@@ -301,6 +301,7 @@
     <script>
         
         num      = localStorage.getItem('num')
+        ttt      = localStorage.getItem('theme')
         curInd   = 0 
         curYear  = new Date().getFullYear()
         animTime = 200
@@ -311,6 +312,7 @@
             $('.add-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
         }
         if (num == null) { num = 1 }
+        if (ttt == null) { localStorage.setItem('theme', 'light') }
         $('main').append(localStorage.getItem('info'))
 
         
