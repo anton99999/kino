@@ -1,19 +1,24 @@
 <html lang="ua">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="https://anton99999.github.io/kino/icons/icon-192x192.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://anton99999.github.io/kino/`1logo.png" type="image/x-icon">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <link rel="manifest" href="manifest.json" />
-    <script src="sw.js"></script>
-    <script src="sw-reg.js"></script>
     <title>КІНЦО</title>
     <style>
         ::-webkit-scrollbar{width: 0px;}
+
+        :root{
+            --white: #fff;
+            --second: #f2f2f2;
+            --text: #000;
+            --invert: invert(0);
+            --bg: 0.5;
+        }    
 
         *{
             margin: 0; 
@@ -21,7 +26,8 @@
             font-family: Montserrat Alternates; 
             font-size: 18px; 
             user-select: none;
-            color: #000;
+            color: var(--text);
+           
         }
         body{
             display: flex;
@@ -35,7 +41,27 @@
             justify-content: flex-end;
             align-items: center;
             height: 120px;
-            background: #F2F2F2;
+            background: var(--second);
+        }
+        main{
+            padding: 20px;
+            display: flex;
+            flex-direction: column-reverse;
+            justify-content: start;
+            align-items: center;
+            flex: 1;
+            overflow-y: scroll;
+            
+            background: var(--second);
+        }
+        footer{
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 60px;
+            background: var(--white);
+            box-shadow: 0px 0px 50px 5px rgba(0, 0, 0, 0.2);
         }
         header div{
             width: 320px;
@@ -43,34 +69,24 @@
             justify-content: space-between;
             align-items: flex-end;
         }
+        header img{
+            filter: var(--invert);
+        }
 
         .status{
             font-weight: 700;
             font-size: 24px;
             color:#999;
         }
-        main{
-            display: flex;
-            flex-direction: column-reverse;
-            justify-content: start;
-            align-items: center;
-            flex: 1;
-            overflow-y: scroll;
-            padding: 20px;
-            background: #F2F2F2;
-        }
-        footer{
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 60px;
-            padding: 0 20px;
-            box-shadow: 0px 0px 50px 5px rgba(0, 0, 0, 0.2);
-        }
+        
+        
         footer div{
             display: flex;
             justify-content: space-around;
             width: 360px;
+        }
+        footer img{
+            filter: var(--invert);
         }
         .film{
             width: 360px;
@@ -81,7 +97,7 @@
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             padding-left: 10px;
-            background: white;
+            background: var(--white);
         }
         .add, .info, .setting{
             display: none;
@@ -90,6 +106,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
+            z-index: 10;
         }
         .add input, .add textarea, .add select{
             width: 100%;
@@ -98,16 +115,16 @@
             border: none;
             padding: 0 10px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-            background: white;
+            background: var(--white);
         }
         .menu{
             display: flex;
             flex-direction: column;
-            background: #F2F2F2;
+            background: var(--second);
             padding: 20px;
             border-radius: 20px;
             width: 320px;
-            z-index: 1;
+            z-index: 11;
         }
         .add-bttn{
             height: 40px;
@@ -121,7 +138,7 @@
             align-items: center;
             justify-content: space-between;
         }
-        .icons svg{
+        .icons svg, .icons img{
             margin-top: 20px;
             margin-left: 10px;
             border-radius: 50px;
@@ -132,12 +149,12 @@
             width: 100%;
             height: 100%;
             background: #000;
-            opacity: 0.4;
+            opacity: var(--bg);
         }
         .setting input{
             margin: 10px;
             height: 40px;
-            background: rgb(255, 255, 255);
+            background: var(--white);
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
             border: none;
             border-radius: 20px;
@@ -174,7 +191,7 @@
             width: 100%;
         }
         .add-year select, .add-genre select{
-            background: var(white);
+            background: var(--white);
         }
         .add p{
             margin: 10px;  
@@ -251,7 +268,7 @@
     <div class="setting">
         <div class="menu">
             <img class="close" onclick="closeTab('.setting')" src="https://anton99999.github.io/kino/img/close.svg">
-            <input type="button" id="theme"  value="Тема: Світла">
+            <input type="button" id="theme"  value="Тема: Темна">
             <input type="button" id="clrAll" value="Очистити все">
         </div>
         <div class="bg" onclick="closeTab('.setting')"></div>
@@ -496,13 +513,56 @@
        
     
     
-        $('#theme').click(function(e){ 
-            console.log(e)
-            $('*').css('background', 'black')
-            $('*').css('color', 'white')
-        });
+        $('#theme').on('click', function (){ 
+            theme = localStorage.getItem('theme')
 
-        $('#clrAll').click(function(e){
+            if(theme == 'light'){
+                $('body').get(0).style.setProperty("--white",  "#333")
+                $('body').get(0).style.setProperty("--second", "#444")
+                $('body').get(0).style.setProperty("--text",   "#fff")
+                $('body').get(0).style.setProperty("--invert", "invert(1)")
+                $('body').get(0).style.setProperty("--bg",     "0.8")
+                $('#theme').val('Тема: Світла')
+                localStorage.setItem('theme','dark')
+            }
+            if(theme == 'dark'){
+                $('body').get(0).style.setProperty("--white",  "#fff")
+                $('body').get(0).style.setProperty("--second", "#f2f2f2")
+                $('body').get(0).style.setProperty("--text",   "#000")
+                $('body').get(0).style.setProperty("--invert", "invert(0)")
+                $('body').get(0).style.setProperty("--bg",     "0.5")
+                $('#theme').val('Тема: Темна')
+                localStorage.setItem('theme','light')
+            }
+        })
+        
+        function ctheme(){ 
+            theme = localStorage.getItem('theme')
+
+            if(theme == 'dark'){
+                $('body').get(0).style.setProperty("--white",  "#333")
+                $('body').get(0).style.setProperty("--second", "#444")
+                $('body').get(0).style.setProperty("--text",   "#fff")
+                $('body').get(0).style.setProperty("--invert", "invert(1)")
+                $('body').get(0).style.setProperty("--bg",     "0.8")
+                $('#theme').val('Тема: Світла')
+
+            }
+            if(theme == 'light'){
+                $('body').get(0).style.setProperty("--white",  "#fff")
+                $('body').get(0).style.setProperty("--second", "#f2f2f2")
+                $('body').get(0).style.setProperty("--text",   "#000")
+                $('body').get(0).style.setProperty("--invert", "invert(0)")
+                $('body').get(0).style.setProperty("--bg",     "0.5")
+                $('#theme').val('Тема: Темна')
+            }
+        }
+        
+        
+        ctheme()
+
+        
+        $('#clrAll').click(function(){
             localStorage.clear()
             location.reload()
         })
