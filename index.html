@@ -1,22 +1,29 @@
 <html lang="ua">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="https://anton99999.github.io/kino/`1logo.png" type="image/x-icon">
+    <link rel="shortcut icon" href="https://anton99999.github.io/kino/logo.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="https://anton99999.github.io/kino/logo.png">
+    <meta name="theme-color" content="#000000"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat+Alternates:wght@300;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <link rel="manifest" href="manifest.json">
+    <script src="sw-reg.js"></script>
+    <script src="sw.js"></script>
     <title>КІНЦО</title>
     <style>
         ::-webkit-scrollbar{width: 0px;}
 
         :root{
             --white: #fff;
+            --black: #fff;
             --second: #f2f2f2;
             --text: #000;
             --invert: invert(0);
+            --invert2: invert(1);
             --bg: 0.5;
         }    
 
@@ -89,17 +96,17 @@
             filter: var(--invert);
         }
         .film{
-            width: 360px;
-            display: flex;
-            align-items: center;
-            height: 40px;
-            margin: 5px 0px;
+            width: 320px;
+            word-wrap: break-word;
+            word-break:break-all;
+            margin-top: 10px;
             box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
             border-radius: 20px;
             padding-left: 10px;
             background: var(--white);
+            padding: 10px;
         }
-        .add, .info, .setting{
+        .add, .info, .setting, .edit{
             display: none;
             justify-content: center;
             align-items: center;
@@ -108,7 +115,12 @@
             height: 100%;
             z-index: 10;
         }
-        .add input, .add textarea, .add select{
+        .add input, 
+        .add textarea, 
+        .add select, 
+        .edit input, 
+        .edit textarea, 
+        .edit select{
             width: 100%;
             height: 35px;
             border-radius: 20px;
@@ -126,10 +138,11 @@
             width: 320px;
             z-index: 11;
         }
-        .add-bttn{
+        .add-bttn,
+        .edit-bttn{
             height: 40px;
-            background: #333;
-            color: #fff;
+            background: var(--text);
+            color: var(--text);
             border-radius: 20px;
             margin-top: 20px;
         }
@@ -159,7 +172,7 @@
             border: none;
             border-radius: 20px;
         }
-        .add-prop{
+        .add-prop, .edit-prop{
             display: flex;
             gap: 20px;
         }
@@ -168,7 +181,7 @@
             font-size: 24px;
             
         }
-        .add textarea{
+        .add textarea, .edit textarea{
             height: 70px;
             padding: 10px;
         }
@@ -185,16 +198,25 @@
         }
         .info p, .info h1{
             margin: 5px 10px;
+            width: 300px;
+            word-wrap: break-word;
             user-select: text;
         }
-        .add-year, .add-genre{
+        .add-year, .add-genre, .edit-year, .edit-genre{
             width: 100%;
         }
-        .add-year select, .add-genre select{
+        .add-year select, .add-genre select, .edit-year select, .edit-genre select{
             background: var(--white);
         }
-        .add p{
+        .add p, .edit p{
             margin: 10px;  
+        }
+        .info-name img{
+            background: white;
+            border-radius: 50px;
+            margin-left: 10px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+            filter: var(--invert2);
         }
     </style>
 </head>
@@ -239,9 +261,9 @@
     <div class="info">
         <div class="menu">
             <img class="close" onclick="closeTab('.info')" src="https://anton99999.github.io/kino/img/close.svg">
-            <h1  class="info-name">Fffff</h1>
-            <p   class="info-prop">Ffff, 2010</p>
-            <p   class="info-note">Нотатка: fffff</p>
+            <h1 class="info-name">error</h1>
+            <p   class="info-prop">error</p>
+            <p   class="info-note">error</p>
             <div class="icons">
                 <div>
                     <svg onclick="filter('like')" id="add-like" xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36" fill="none">
@@ -273,6 +295,42 @@
         </div>
         <div class="bg" onclick="closeTab('.setting')"></div>
     </div>
+
+    <div class="edit">
+        <div class="menu">
+            <img class="close" onclick="closeTab('.edit')" src="https://anton99999.github.io/kino/img/close.svg">
+            <div class="edit-name">
+                <p>Назва</p>
+                <input type="text">
+            </div>
+            <div class="edit-prop">
+                <div class="edit-year">
+                    <p>Рік</p>
+                    <select>
+                        <option value=" "></option>
+                        
+                    </select>
+                </div>
+                <div class="edit-genre">
+                    <p>Жанр</p>
+                    <select>
+                        <option value=" "></option>
+                        <option value="Фільм">кіно</option>
+                        <option value="Мультфільм">мутьтик</option>
+                        <option value="Серіал">серік</option>
+                        <option value="Аніме">аниме</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="edit-note">
+                <p>Нотатка</p>
+                <textarea name="" cols="30" rows="10"></textarea>
+            </div>
+            <input style="background: #006500; color: #fff;" class="edit-bttn" type="button" value="Змінити">
+        </div>
+        <div class="bg" onclick="closeTab('.edit')"></div>
+    </div>
     
     <header>
         <div>
@@ -300,16 +358,17 @@
 
     <script>
         
-        num      = localStorage.getItem('num')
-        ttt      = localStorage.getItem('theme')
-        curInd   = 0 
-        curYear  = new Date().getFullYear()
-        animTime = 200
+        num       = localStorage.getItem('num')
+        ttt       = localStorage.getItem('theme')
+        curInd    = 0 
+        curYear   = new Date().getFullYear()
+        animTime  = 200
+        shortname = ''
 
 
 
         for (curYear; curYear >= 1895; curYear--) {
-            $('.add-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
+            $('.add-year select, .edit-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
         }
         if (num == null) { num = 1 }
         if (ttt == null) { localStorage.setItem('theme', 'light') }
@@ -323,14 +382,17 @@
             year  = $('.add-year select').val()
             genre = $('.add-genre select').val()
             note  =  $('.add-note textarea').val()
+            
+            if(name.length >= 20){
+                shortname = name.slice(0, 20) + '...'
+            }
+            else{
+                shortname = name
+            }
 
 
             
-            $('main').append(
-                '<div id="num' + num + '" onclick="openInfo(' + num + ')">' +
-                    '<p class="film">🎬 ' + name + year +'</p>' +
-                '</div>'
-            )
+            $('main').append('<p class="film" id="num'+num+'" onclick="openInfo('+num+')">🎬 '+shortname+year+'</p>')
             
             $('#num' + num).attr('name',  name)
             $('#num' + num).attr('year',  year)
@@ -354,7 +416,44 @@
             $('.menu').hide(animTime)
         })
 
+        $('.edit-bttn').click(function(){
 
+            name  = $('.edit-name input').val()
+            year  = $('.edit-year select').val()
+            genre = $('.edit-genre select').val()
+            note  = $('.edit-note textarea').val()
+            
+            if(name.length >= 20){
+                shortname = name.slice(0, 20) + '...'
+            }
+            else{
+                shortname = name
+            }
+            
+            $('#num' + curInd).attr('name', name)
+            $('#num' + curInd).attr('year',  year)
+            $('#num' + curInd).attr('genre', genre)
+            $('#num' + curInd).attr('note',  note)
+
+            $('#num' + curInd).text('🎬 '+shortname+year)
+            
+            $('.edit-name input').val(' ')
+            $('.edit-year select').val(' ')
+            $('.edit-genre select').val(' ')
+            $('.edit-note textarea').val(' ')
+            
+            setTimeout(()=>{
+                $('.edit').css('display', 'none')
+                $('.info').css('display', 'none')
+                localStorage.setItem('info', $('main').html())
+                localStorage.setItem('num', num)
+            }, animTime);
+
+            $('.menu').show(0)
+            $('.menu').hide(animTime)
+        })
+
+        
 
         function closeTab(e){
             setTimeout(()=>{
@@ -389,7 +488,7 @@
             genre = $('#num' + e).attr('genre')
             note  = $('#num' + e).attr('note')
 
-            $(".info-name").text(name)
+            console.log($('.info .menu').children('h1').html(name+'<img onclick="openEdit('+e+')" src="https://anton99999.github.io/kino/img/edit.svg">'))
             $(".info-prop").text(genre + year)
             $(".info-note").text("Нотатка: " + note)
 
@@ -462,7 +561,22 @@
             }
         }
 
-        
+        function openEdit(e){
+            $('.info').css('display', 'none')
+            $('.edit').css('display', 'flex')
+
+            $('.edit-name input').val($('#num' + curInd).attr('name'))
+            $('.edit-year select').val($('#num' + curInd).attr('year'))
+            $('.edit-genre select').val($('#num' + curInd).attr('genre'))
+            $('.edit-note textarea').val($('#num' + curInd).attr('note'))
+            
+            $('#num' + curInd).attr('note')
+            
+            $('.edit .menu').hide(0)
+            $('.edit .menu').show(animTime)
+        }
+
+
         
         $('#all').click(function(){
             $('.status').text('всі')
@@ -520,18 +634,22 @@
 
             if(theme == 'light'){
                 $('body').get(0).style.setProperty("--white",  "#333")
+                $('body').get(0).style.setProperty("--black",  "#000")
                 $('body').get(0).style.setProperty("--second", "#444")
                 $('body').get(0).style.setProperty("--text",   "#fff")
                 $('body').get(0).style.setProperty("--invert", "invert(1)")
+                $('body').get(0).style.setProperty("--invert2", "invert(0)")
                 $('body').get(0).style.setProperty("--bg",     "0.8")
                 $('#theme').val('Тема: Світла')
                 localStorage.setItem('theme','dark')
             }
             if(theme == 'dark'){
                 $('body').get(0).style.setProperty("--white",  "#fff")
+                $('body').get(0).style.setProperty("--black",  "#fff")
                 $('body').get(0).style.setProperty("--second", "#f2f2f2")
                 $('body').get(0).style.setProperty("--text",   "#000")
                 $('body').get(0).style.setProperty("--invert", "invert(0)")
+                $('body').get(0).style.setProperty("--invert2", "invert(1)")
                 $('body').get(0).style.setProperty("--bg",     "0.5")
                 $('#theme').val('Тема: Темна')
                 localStorage.setItem('theme','light')
@@ -543,27 +661,28 @@
 
             if(theme == 'dark'){
                 $('body').get(0).style.setProperty("--white",  "#333")
+                $('body').get(0).style.setProperty("--black",  "#000")
                 $('body').get(0).style.setProperty("--second", "#444")
                 $('body').get(0).style.setProperty("--text",   "#fff")
                 $('body').get(0).style.setProperty("--invert", "invert(1)")
+                $('body').get(0).style.setProperty("--invert2", "invert(0)")
                 $('body').get(0).style.setProperty("--bg",     "0.8")
                 $('#theme').val('Тема: Світла')
 
             }
             if(theme == 'light'){
                 $('body').get(0).style.setProperty("--white",  "#fff")
+                $('body').get(0).style.setProperty("--black",  "#fff")
                 $('body').get(0).style.setProperty("--second", "#f2f2f2")
                 $('body').get(0).style.setProperty("--text",   "#000")
                 $('body').get(0).style.setProperty("--invert", "invert(0)")
+                $('body').get(0).style.setProperty("--invert2", "invert(1)")
                 $('body').get(0).style.setProperty("--bg",     "0.5")
                 $('#theme').val('Тема: Темна')
             }
-        }
-        
-        
+        } 
         ctheme()
 
-        
         $('#clrAll').click(function(){
             localStorage.clear()
             location.reload()
