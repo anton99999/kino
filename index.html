@@ -115,12 +115,7 @@
             height: 100%;
             z-index: 10;
         }
-        .add input, 
-        .add textarea, 
-        .add select, 
-        .edit input, 
-        .edit textarea, 
-        .edit select{
+        .inp{
             width: 100%;
             height: 35px;
             border-radius: 20px;
@@ -142,9 +137,10 @@
         .edit-bttn{
             height: 40px;
             background: var(--text);
-            color: var(--text);
+            color: var(--black);
             border-radius: 20px;
             margin-top: 20px;
+            border: none;
         }
         .icons{
             display: flex;
@@ -227,19 +223,18 @@
             <img class="close" onclick="closeTab('.add')" src="https://anton99999.github.io/kino/img/close.svg">
             <div class="add-name">
                 <p>Назва</p>
-                <input type="text">
+                <input class="inp" type="text">
             </div>
             <div class="add-prop">
                 <div class="add-year">
                     <p>Рік</p>
-                    <select>
+                    <select class="inp">
                         <option value=" "></option>
-                        
                     </select>
                 </div>
                 <div class="add-genre">
                     <p>Жанр</p>
-                    <select>
+                    <select class="inp">
                         <option value=" "></option>
                         <option value="Фільм">кіно</option>
                         <option value="Мультфільм">мутьтик</option>
@@ -251,9 +246,9 @@
             </div>
             <div class="add-note">
                 <p>Нотатка</p>
-                <textarea name="" cols="30" rows="10"></textarea>
+                <textarea class="inp" name="" cols="30" rows="10"></textarea>
             </div>
-            <input style="background: #333;" class="add-bttn" type="button" value="Додати">
+            <input class="add-bttn" type="button" value="Додати">
         </div>
         <div class="bg" onclick="closeTab('.add')"></div>
     </div>
@@ -290,6 +285,7 @@
     <div class="setting">
         <div class="menu">
             <img class="close" onclick="closeTab('.setting')" src="https://anton99999.github.io/kino/img/close.svg">
+            <input type="button" id="anim"  value="Анімація: Викл">
             <input type="button" id="theme"  value="Тема: Темна">
             <input type="button" id="clrAll" value="Очистити все">
         </div>
@@ -301,19 +297,18 @@
             <img class="close" onclick="closeTab('.edit')" src="https://anton99999.github.io/kino/img/close.svg">
             <div class="edit-name">
                 <p>Назва</p>
-                <input type="text">
+                <input class="inp" type="text">
             </div>
             <div class="edit-prop">
                 <div class="edit-year">
                     <p>Рік</p>
-                    <select>
+                    <select class="inp">
                         <option value=" "></option>
-                        
                     </select>
                 </div>
                 <div class="edit-genre">
                     <p>Жанр</p>
-                    <select>
+                    <select class="inp">
                         <option value=" "></option>
                         <option value="Фільм">кіно</option>
                         <option value="Мультфільм">мутьтик</option>
@@ -325,9 +320,9 @@
             </div>
             <div class="edit-note">
                 <p>Нотатка</p>
-                <textarea name="" cols="30" rows="10"></textarea>
+                <textarea class="inp" name="" cols="30" rows="10"></textarea>
             </div>
-            <input style="background: #006500; color: #fff;" class="edit-bttn" type="button" value="Змінити">
+            <input class="edit-bttn" type="button" value="Змінити">
         </div>
         <div class="bg" onclick="closeTab('.edit')"></div>
     </div>
@@ -358,11 +353,11 @@
 
     <script>
         
-        num       = localStorage.getItem('num')
-        ttt       = localStorage.getItem('theme')
+        num       = Number(localStorage.getItem('num'))
+        ttt       = Number(localStorage.getItem('theme'))
+        animTime  = Number(localStorage.getItem('animTime'))
         curInd    = 0 
         curYear   = new Date().getFullYear()
-        animTime  = 200
         shortname = ''
 
 
@@ -372,6 +367,7 @@
         }
         if (num == null) { num = 1 }
         if (ttt == null) { localStorage.setItem('theme', 'light') }
+        if (animTime == null) { animTime = 200 }
         $('main').append(localStorage.getItem('info'))
 
         
@@ -627,9 +623,22 @@
             }
         })
        
+        
+
+        $('#anim').click(function(){
+            if ($('#anim').val() == 'Анімація: Викл') {
+                $('#anim').val('Анімація: Вкл')
+                animTime  = 0
+                localStorage.setItem('animTime', animTime)
+            }
+            else if ($('#anim').val() == 'Анімація: Вкл') {
+                $('#anim').val('Анімація: Викл')
+                animTime  = 200
+                localStorage.setItem('animTime', animTime)
+            }
+        })
     
-    
-        $('#theme').on('click', function (){ 
+        $('#theme').click(function (){ 
             theme = localStorage.getItem('theme')
 
             if(theme == 'light'){
@@ -643,7 +652,7 @@
                 $('#theme').val('Тема: Світла')
                 localStorage.setItem('theme','dark')
             }
-            if(theme == 'dark'){
+            else if(theme == 'dark'){
                 $('body').get(0).style.setProperty("--white",  "#fff")
                 $('body').get(0).style.setProperty("--black",  "#fff")
                 $('body').get(0).style.setProperty("--second", "#f2f2f2")
@@ -691,7 +700,9 @@
         
 
         
-    
+    $('html').click(function(){
+        console.log(animTime)
+    })
     </script>
 </body>
 </html>
