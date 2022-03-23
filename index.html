@@ -363,7 +363,7 @@
 
 
         for (curYear; curYear >= 1895; curYear--) {
-            $('.add-year select, .edit-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
+            $('.add-year select, .edit-year select').append('<option value="'+curYear+'">'+curYear+'</option>')
         }
 
         if (num == null) { num = 1 }
@@ -376,10 +376,12 @@
         else{ $('#anim').val('Анімація: Викл') }
 
         if(ttt == 'light'){
-            lightTheme()
+            localStorage.setItem('theme','dark')
+            darkTheme()
         }
         else if(ttt == 'dark'){
-            darkTheme()
+            localStorage.setItem('theme','light')
+            lightTheme()
         }
         
 
@@ -403,7 +405,7 @@
 
 
             
-            $('main').append('<p class="film" id="num'+num+'" onclick="openInfo('+num+')">🎬 '+shortname+year+'</p>')
+            $('main').append('<p class="film" id="num'+num+'" onclick="openInfo('+num+')">🎬 '+shortname+', '+year+'</p>')
             
             $('#num' + num).attr('name',  name)
             $('#num' + num).attr('year',  year)
@@ -446,7 +448,7 @@
             $('#num' + curInd).attr('genre', genre)
             $('#num' + curInd).attr('note',  note)
 
-            $('#num' + curInd).text('🎬 '+shortname+year)
+            $('#num' + curInd).text('🎬 '+shortname+', '+year)
             
             $('.edit-name input').val(' ')
             $('.edit-year select').val(' ')
