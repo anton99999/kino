@@ -160,13 +160,15 @@
             background: #000;
             opacity: var(--bg);
         }
-        .setting input{
+        .setting input, .setting a{
             margin: 10px;
-            height: 40px;
             background: var(--white);
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
             border: none;
             border-radius: 20px;
+            text-align: center;
+            padding: 10px 0;
+            text-decoration: none;
         }
         .add-prop, .edit-prop{
             display: flex;
@@ -287,6 +289,7 @@
             <img class="close" onclick="closeTab('.setting')" src="https://anton99999.github.io/kino/img/close.svg">
             <input type="button" id="anim"  value="Анімація: Викл">
             <input type="button" id="theme"  value="Тема: Темна">
+            <a id="sdata" download="kinco.txt">Експорт</a>
             <input type="button" id="clrAll" value="Очистити все">
         </div>
         <div class="bg" onclick="closeTab('.setting')"></div>
@@ -338,8 +341,7 @@
         </div>
     </header>
     
-    <main>
-    </main>
+    <main></main>
 
     <footer>
         <div>
@@ -383,7 +385,7 @@
         }
         
 
-        $('main').append(localStorage.getItem('info'))
+        $('main').prepend(localStorage.getItem('info'))
 
         
 
@@ -412,10 +414,10 @@
             
             num++
             
-            $('.add-name input').val(' ')
+            $('.add-name input').val('')
             $('.add-year select').val(' ')
             $('.add-genre select').val(' ')
-            $('.add-note textarea').val(' ')
+            $('.add-note textarea').val('')
             
             setTimeout(()=>{
                 $('.add').css('display', 'none')
@@ -469,8 +471,6 @@
         function closeTab(e){
             setTimeout(()=>{
                 $(e).css('display', 'none')
-                localStorage.setItem('info', $('main').html())
-                localStorage.setItem('num', num)
             }, animTime);
 
             $(e + ' .menu').show(0)
@@ -539,7 +539,6 @@
             setTimeout(()=>{
                 $('.info').css('display', 'none')
                 localStorage.setItem('info', $('main').html())
-                localStorage.setItem('num', num)
             }, animTime);
 
             $('.menu').show(0)
@@ -699,6 +698,18 @@
             $('#theme').val('Тема: Темна')
         }
 
+        $('#sdata').click(function(){
+            const blob = new Blob([$('main').html()], {type:"text/plain"});
+            $('#sdata')[0].href = URL.createObjectURL(blob)
+            console.log($('main').html())
+        })
+
+        // function download(){
+        //     const blob = new Blob([$('main').html()], {type:"text/plain"});
+        //     $('#sdata')[0].href = URL.createObjectURL(blob)
+        //     console.log($('main').html())
+        // }
+        
         $('#clrAll').click(function(){
             localStorage.clear()
             location.reload()
