@@ -365,21 +365,26 @@
         for (curYear; curYear >= 1895; curYear--) {
             $('.add-year select, .edit-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
         }
-        if (num == null) { 
-            num = 1 
+
+        if (num == null) { num = 1 }
+
+        if (ttt == null) { ttt = localStorage.setItem('theme', 'dark') }
+
+        if (animTime == null) { animTime = 200 }
+
+        if (animTime == 0) { $('#anim').val('Анімація: Вкл') }
+        else{ $('#anim').val('Анімація: Викл') }
+
+        if(ttt == 'light'){
+            localStorage.setItem('theme','dark')
+            darkTheme()
         }
-        if (ttt == null) { 
-            ttt = 'dark' 
+        else if(ttt == 'dark'){
+            localStorage.setItem('theme','light')
+            lightTheme()
         }
-        if (animTime == null) { 
-            animTime = 200 
-        }
-        if (animTime == 0) {
-            $('#anim').val('Анімація: Вкл')
-        }
-        else{
-            $('#anim').val('Анімація: Викл')
-        }
+        
+
         $('main').append(localStorage.getItem('info'))
 
         
@@ -667,41 +672,34 @@
 
             if(ttt == 'light'){
                 localStorage.setItem('theme','dark')
-                ctheme()   
+                darkTheme()
             }
             else if(ttt == 'dark'){
                 localStorage.setItem('theme','light')
-                ctheme()  
+                lightTheme()
             }
         })
-            
-        
-        function ctheme(e){ 
-            ttt = localStorage.getItem('theme')
 
-            if(ttt == 'dark'){
-                
-                $('body').get(0).style.setProperty("--white",  "#333")
-                $('body').get(0).style.setProperty("--black",  "#000")
-                $('body').get(0).style.setProperty("--second", "#444")
-                $('body').get(0).style.setProperty("--text",   "#fff")
-                $('body').get(0).style.setProperty("--invert", "invert(1)")
-                $('body').get(0).style.setProperty("--invert2","invert(0)")
-                $('body').get(0).style.setProperty("--bg",     "0.8")
-                $('#theme').val('Тема: Світла')
-            }
-            else if(ttt == 'light'){
-                $('body').get(0).style.setProperty("--white",  "#fff")
-                $('body').get(0).style.setProperty("--black",  "#fff")
-                $('body').get(0).style.setProperty("--second", "#f2f2f2")
-                $('body').get(0).style.setProperty("--text",   "#000")
-                $('body').get(0).style.setProperty("--invert", "invert(0)")
-                $('body').get(0).style.setProperty("--invert2", "invert(1)")
-                $('body').get(0).style.setProperty("--bg",     "0.5")
-                $('#theme').val('Тема: Темна')
-            }
-        } 
-        ctheme()
+        function darkTheme() {
+            $('body').get(0).style.setProperty("--white",  "#333")
+            $('body').get(0).style.setProperty("--black",  "#000")
+            $('body').get(0).style.setProperty("--second", "#444")
+            $('body').get(0).style.setProperty("--text",   "#fff")
+            $('body').get(0).style.setProperty("--invert", "invert(1)")
+            $('body').get(0).style.setProperty("--invert2","invert(0)")
+            $('body').get(0).style.setProperty("--bg",     "0.8")
+            $('#theme').val('Тема: Світла')
+        }
+        function lightTheme() {
+            $('body').get(0).style.setProperty("--white",  "#fff")
+            $('body').get(0).style.setProperty("--black",  "#fff")
+            $('body').get(0).style.setProperty("--second", "#f2f2f2")
+            $('body').get(0).style.setProperty("--text",   "#000")
+            $('body').get(0).style.setProperty("--invert", "invert(0)")
+            $('body').get(0).style.setProperty("--invert2", "invert(1)")
+            $('body').get(0).style.setProperty("--bg",     "0.5")
+            $('#theme').val('Тема: Темна')
+        }
 
         $('#clrAll').click(function(){
             localStorage.clear()
