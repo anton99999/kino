@@ -354,7 +354,7 @@
     <script>
         
         num       = Number(localStorage.getItem('num'))
-        ttt       = Number(localStorage.getItem('theme'))
+        ttt       = localStorage.getItem('theme')
         animTime  = Number(localStorage.getItem('animTime'))
         curInd    = 0 
         curYear   = new Date().getFullYear()
@@ -365,9 +365,21 @@
         for (curYear; curYear >= 1895; curYear--) {
             $('.add-year select, .edit-year select').append('<option value=", '+curYear+'">'+curYear+'</option>')
         }
-        if (num == null) { num = 1 }
-        if (ttt == null) { localStorage.setItem('theme', 'light') }
-        if (animTime == null) { animTime = 200 }
+        if (num == null) { 
+            num = 1 
+        }
+        if (ttt == null) { 
+            ttt = 'dark' 
+        }
+        if (animTime == null) { 
+            animTime = 200 
+        }
+        if (animTime == 0) {
+            $('#anim').val('Анімація: Вкл')
+        }
+        else{
+            $('#anim').val('Анімація: Викл')
+        }
         $('main').append(localStorage.getItem('info'))
 
         
@@ -492,15 +504,27 @@
                 $('#add-like circle').css('fill', 'red')
                 $('#add-like path').css('stroke', 'white')
             }
+            else{
+                $('#add-like circle').css('fill', 'white')
+                $('#add-like path').css('stroke', '#333')
+            }
 
             if ($('#num' + curInd).attr('want') == 'yes') {
                 $('#add-want circle').css('fill', 'orange')
                 $('#add-want path').css('stroke', 'white')
             }
+            else{
+                $('#add-want circle').css('fill', 'white')
+                $('#add-want path').css('stroke', '#333')
+            }
 
             if ($('#num' + curInd).attr('view') == 'yes') {
                 $('#add-view circle').css('fill', 'orange')
                 $('#add-view path').css('stroke', 'white')
+            }
+            else{
+                $('#add-view circle').css('fill', 'white')
+                $('#add-view path').css('stroke', '#333')
             }
     
             console.log(curInd)
@@ -639,47 +663,34 @@
         })
     
         $('#theme').click(function (){ 
-            theme = localStorage.getItem('theme')
+            ttt = localStorage.getItem('theme')
 
-            if(theme == 'light'){
-                $('body').get(0).style.setProperty("--white",  "#333")
-                $('body').get(0).style.setProperty("--black",  "#000")
-                $('body').get(0).style.setProperty("--second", "#444")
-                $('body').get(0).style.setProperty("--text",   "#fff")
-                $('body').get(0).style.setProperty("--invert", "invert(1)")
-                $('body').get(0).style.setProperty("--invert2", "invert(0)")
-                $('body').get(0).style.setProperty("--bg",     "0.8")
-                $('#theme').val('Тема: Світла')
+            if(ttt == 'light'){
                 localStorage.setItem('theme','dark')
+                ctheme()   
             }
-            else if(theme == 'dark'){
-                $('body').get(0).style.setProperty("--white",  "#fff")
-                $('body').get(0).style.setProperty("--black",  "#fff")
-                $('body').get(0).style.setProperty("--second", "#f2f2f2")
-                $('body').get(0).style.setProperty("--text",   "#000")
-                $('body').get(0).style.setProperty("--invert", "invert(0)")
-                $('body').get(0).style.setProperty("--invert2", "invert(1)")
-                $('body').get(0).style.setProperty("--bg",     "0.5")
-                $('#theme').val('Тема: Темна')
+            else if(ttt == 'dark'){
                 localStorage.setItem('theme','light')
+                ctheme()  
             }
         })
+            
         
-        function ctheme(){ 
-            theme = localStorage.getItem('theme')
+        function ctheme(e){ 
+            ttt = localStorage.getItem('theme')
 
-            if(theme == 'dark'){
+            if(ttt == 'dark'){
+                
                 $('body').get(0).style.setProperty("--white",  "#333")
                 $('body').get(0).style.setProperty("--black",  "#000")
                 $('body').get(0).style.setProperty("--second", "#444")
                 $('body').get(0).style.setProperty("--text",   "#fff")
                 $('body').get(0).style.setProperty("--invert", "invert(1)")
-                $('body').get(0).style.setProperty("--invert2", "invert(0)")
+                $('body').get(0).style.setProperty("--invert2","invert(0)")
                 $('body').get(0).style.setProperty("--bg",     "0.8")
                 $('#theme').val('Тема: Світла')
-
             }
-            if(theme == 'light'){
+            else if(ttt == 'light'){
                 $('body').get(0).style.setProperty("--white",  "#fff")
                 $('body').get(0).style.setProperty("--black",  "#fff")
                 $('body').get(0).style.setProperty("--second", "#f2f2f2")
@@ -697,12 +708,8 @@
             location.reload()
         })
 
-        
-
-        
-    $('html').click(function(){
-        console.log(animTime)
-    })
+        // console.log()
+    
     </script>
 </body>
 </html>
